@@ -105,15 +105,18 @@ class UserInterface:
                 return
 
     def manage_filter_sign_mod(self):
-        sign = input("Choose sign(< or = or >): ")
-        if sign not in ["<", "=", ">"]:
-            print("Your sign must be < or = or > !")
-            return
-        mod = int(input("Give here your number: "))
-        if mod < 0:
-            print("The number must be positive !")
-            return
-        self.srv.filter_sign_modul(sign, mod*mod)
+        try:
+            sign = input("Choose sign(< or = or >): ")
+            if sign not in ["<", "=", ">"]:
+                print("Your sign must be < or = or > !")
+                return
+            mod = int(input("Give here your number: "))
+            if mod < 0:
+                print("The number must be positive !")
+                return
+            self.srv.filter_sign_modul(sign, mod*mod)
+        except Exception as e:
+            print(e)
 
     # ADD OPERATIONS
     def add_nr(self):
@@ -226,18 +229,20 @@ class UserInterface:
         print(self.srv.prod_sequence(seq[0] - 1, seq[1]))
 
     def operation_sort_by_pi(self):
-        result = self.srv.sort_by_pi()
-        for nr in result:
+        for nr in self.srv.sort_by_pi():
             print(nr)
 
     def choose_the_sequence(self):
-        a = int(input("Alege inceputul: "))
-        b = int(input("Alege sfarsitul: "))
-        if a > b:
-            c = a
-            a = b
-            b = c
-        if a < 1 or b - 1 > self.srv.get_size():
-            print("Intervalul dat este invalid !")
-            return
-        return [a, b]
+        try:
+            a = int(input("Alege inceputul: "))
+            b = int(input("Alege sfarsitul: "))
+            if a > b:
+                c = a
+                a = b
+                b = c
+            if a < 1 or b - 1 > self.srv.get_size():
+                print("Intervalul dat este invalid !")
+                return
+            return [a, b]
+        except Exception as e:
+            print(e)
